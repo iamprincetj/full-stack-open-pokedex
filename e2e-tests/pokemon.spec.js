@@ -9,7 +9,7 @@ describe('Pokedex', () => {
     await expect(page.getByText('ivysaur')).toBeVisible()
     await expect(
       page.getByText(
-        'Pokémon and Pokémon character names is trademarks of Nintendo.'
+        'Pokémon and Pokémon character names are trademarks of Nintendo.'
       )
     ).toBeVisible()
   })
