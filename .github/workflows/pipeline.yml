@@ -40,5 +40,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: github context
         env:
-          GITHUB_CONTEXT: ${{ contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
+          GITHUB_CONTEXT: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         run: echo "$GITHUB_CONTEXT"
