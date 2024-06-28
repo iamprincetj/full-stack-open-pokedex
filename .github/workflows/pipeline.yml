@@ -29,10 +29,6 @@ jobs:
         run: npx playwright install --with-deps
       - name: e2e tests
         run: npm run test:e2e
-      - name: github context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
@@ -48,3 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+      - name: github context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event.commits) }}
+        run: echo "$GITHUB_CONTEXT"
