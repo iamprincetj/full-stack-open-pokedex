@@ -41,5 +41,5 @@ jobs:
       - name: github context
         env:
           GITHUB_CONTEXT: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
-        if: '$GITHUB_CONTEXT'
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         run: echo "$GITHUB_CONTEXT"
