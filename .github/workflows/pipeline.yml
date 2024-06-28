@@ -40,5 +40,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: github context
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.commits.*.message) }}
+          GITHUB_CONTEXT: ${{ contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         run: echo "$GITHUB_CONTEXT"
