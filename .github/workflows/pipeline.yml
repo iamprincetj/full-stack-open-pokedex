@@ -37,6 +37,11 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+
+  tag_release:
+    needs: [simple_deployment_pipeline, deploy]
+    runs-on: ubuntu-20.04
+    steps:
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.69.0
         env:
