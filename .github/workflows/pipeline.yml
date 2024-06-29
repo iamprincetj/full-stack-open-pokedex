@@ -25,6 +25,8 @@ jobs:
         run: npm run build
       - name: test
         run: npm run test
+      - name: github context
+        run: echo ${{ toJson(github.event) }}
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: e2e tests
@@ -44,3 +46,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+      - name: Discord Webhook Notify
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: success()
+        with:
+          severity: info
+          details: |
+            to: https://full-stack-open-pokedex-vc4o.onrender.com/ by ${{ github.actor }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
