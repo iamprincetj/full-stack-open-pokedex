@@ -23,10 +23,16 @@ jobs:
         run: npm run eslint
       - name: build
         run: npm run build
+      - name: Build failed
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: failure()
+        with:
+          severity: warn
+          details: commit |
+            ${{ github.event.commits[0].url }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test
         run: npm run test
-      - name: github context
-        run: echo ${{ toJson(github.event) }}
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: e2e tests
