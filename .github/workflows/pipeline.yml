@@ -28,11 +28,12 @@ jobs:
         if: failure()
         with:
           severity: warn
+          text: Build failed
           details: |
-            # Build failed
             commit
-            ${{ github.event.commits[0].url }}
+              ${{ github.event.commits[0].url }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          color: '#FF0000'
       - name: test
         run: npm run test
       - name: Install Playwright Browsers
@@ -59,7 +60,7 @@ jobs:
         if: success()
         with:
           severity: info
+          text: A new version of Pokedex deployed
           details: |
-            # A new version of Pokedex deployed
             to: https://full-stack-open-pokedex-vc4o.onrender.com/ by ${{ github.actor }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
