@@ -23,12 +23,6 @@ jobs:
         run: npm run eslint
       - name: build
         run: npm run build
-      - name: test
-        run: npm run test
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: e2e tests
-        run: npm run test
       - name: WebHook Build Failed
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure()
@@ -39,6 +33,12 @@ jobs:
             build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           color: '#FF0000'
+      - name: test
+        run: npm run test
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: e2e tests
+        run: npm run test
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
