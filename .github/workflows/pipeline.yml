@@ -25,17 +25,6 @@ jobs:
         run: echo ${{ toJson(github.event.commits) }}
       - name: build
         run: npm run build:e2e
-      - name: Build failed
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        if: failure()
-        with:
-          severity: warn
-          text: Build failed
-          details: |
-            commit
-              ${{ toJson(github.event.commits[0].url) }} by ${{ toJson(github.event.commits[0].committer.name) }}
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          color: '#FF0000'
       - name: test
         run: npm run test
       - name: Install Playwright Browsers
