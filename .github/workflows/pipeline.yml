@@ -31,7 +31,7 @@ jobs:
           text: Build failed
           details: |
             commit
-              ${{ github.event.commits[0].url }}
+              ${{ toJson(github.event.commits[0].url) }} by ${{ toJson(github.event.commits[0].committer.name) }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           color: '#FF0000'
       - name: test
