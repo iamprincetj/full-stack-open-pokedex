@@ -14,7 +14,5 @@ jobs:
           echo "Hello World"
       - name: Now it is
         run: date
-      - name: github context
-        run: echo ${{ github.event.head_commit }}
       - name: Directory content
         run: ls -l
