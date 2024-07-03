@@ -23,23 +23,22 @@ jobs:
         run: npm run eslint
       - name: build
         run: npm run build
-      - name: Build failed
-        env:
-          COMMITS: ${{ toJson(github.event.commits[0].url) }}
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        if: failure()
-        with:
-          severity: warn
-          details: |
-            commit
-              "$COMMITS" by ${{ toJson(github.event.commits[0].committer.name) }}
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test
         run: npm run test
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: e2e tests
-        run: npm run test:e2e
+        run: npm run test
+      - name: WebHook Build Failed
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: failure()
+        with:
+          severity: warn
+          text: Build failed
+          details: |
+            build failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          color: '#FF0000'
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message), ' '), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
@@ -60,7 +59,7 @@ jobs:
         if: success()
         with:
           severity: info
+          text: A new version of Pokedex deployed
           details: |
-            # A new version of Pokedex deployed
             to: https://full-stack-open-pokedex-vc4o.onrender.com/ by ${{ github.actor }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
