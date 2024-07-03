@@ -14,9 +14,5 @@ jobs:
           echo "Hello World"
       - name: Now it is
         run: date
-      - name: github context
-        env:
-          COMMITS: ${{ toJson(github.event.commits[0].url) }}
-        run: echo "$COMMITS"
       - name: Directory content
         run: ls -l
