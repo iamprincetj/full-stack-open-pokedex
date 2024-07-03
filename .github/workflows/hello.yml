@@ -15,6 +15,6 @@ jobs:
       - name: Now it is
         run: date
       - name: github context
-        run: echo ${{ toJson(github.event.head_commit) }}
+        run: echo ${{ toJson(github.event) }}
       - name: Directory content
         run: ls -l
