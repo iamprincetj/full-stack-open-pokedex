@@ -24,14 +24,15 @@ jobs:
       - name: build
         run: npm run build
       - name: Build failed
+        env:
+          COMMITS: ${{ toJson(github.event.commits[0].url) }}
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure()
         with:
           severity: warn
           details: |
-            # A new version of Pokedex deployed
             commit
-            ${{ github.event.commits[0].url }}
+              "$COMMITS" by ${{ toJson(github.event.commits[0].committer.name) }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: test
         run: npm run test
