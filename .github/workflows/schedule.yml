@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-job:
+jobs:
   schedule_pipeline:
     runs-on: ubuntu-20.04
     steps:
