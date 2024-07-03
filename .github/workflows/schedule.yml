@@ -2,7 +2,7 @@ name: Periodic health check
 
 on:
   schedule:
-    - cron: '15 2 * * *'
+    - cron: '16 14 * * *'
 
 jobs:
   schedule_pipeline:
