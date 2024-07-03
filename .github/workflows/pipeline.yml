@@ -22,7 +22,7 @@ jobs:
       - name: lint
         run: npm run eslint
       - name: github context
-        run: echo ${{ toJson(github.event.commits) }}
+        run: echo ${{ toJson(github.event) }}
       - name: build
         run: npm run build:e2e
       - name: test
