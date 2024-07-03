@@ -16,7 +16,7 @@ jobs:
         run: date
       - name: github context
         env:
-          COMMITS: ${{ toJson(github.event.commits)[0] }}
+          COMMITS: ${{ toJson(github.event.commits[0]) }}
         run: echo "$COMMITS"
       - name: Directory content
         run: ls -l
