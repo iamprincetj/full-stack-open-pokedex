@@ -23,7 +23,7 @@ jobs:
         run: npm run eslint
       - name: commits
         env:
-          COMMITS: ${{ toJson(github.event) }}
+          COMMITS: ${{ toJson(github) }}
         run: echo "$COMMITS"
       - name: build
         run: npm run build:e2e
